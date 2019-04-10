@@ -2,11 +2,16 @@
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass as BaseDoctrineOrmMappingsPass;
+use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass
+class DoctrineOrmMappingsPass extends BaseDoctrineOrmMappingsPass
 {
     public function __construct($driver = null, array $namespaces = [], $managerParameters = [], $enabledParameter = false, array $aliasMap = [])
     {
@@ -17,24 +22,17 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
     {
         $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
         $namespaces      = [];
-
-        if (
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment' === $container->getParameter('hackzilla_ticket.model.ticket.class')
-            ||
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment' === $container->getParameter('hackzilla_ticket.model.message.class')
+        if (is_subclass_of(TicketWithAttachment::class, $container->getParameter('hackzilla_ticket.model.ticket.class'))
+            || is_subclass_of(TicketMessageWithAttachment::class, $container->getParameter('hackzilla_ticket.model.message.class'))
         ) {
-            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Entity';
-        } elseif (
-            'Hackzilla\Bundle\TicketBundle\Entity\Ticket' === $container->getParameter('hackzilla_ticket.model.ticket.class')
-            ||
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage' === $container->getParameter('hackzilla_ticket.model.message.class')
-        ) {
-            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Entity';
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Model';
+        } else {
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Model';
         }
 
         $arguments        = [$namespaces, '.orm.xml'];
-        $locator          = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $this->driver     = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', [$locator]);
+        $locator          = new Definition(SymfonyFileLocator::class, $arguments);
+        $this->driver     = new Definition(XmlDriver::class, [$locator]);
         $this->namespaces = $namespaces;
 
         parent::process($container);

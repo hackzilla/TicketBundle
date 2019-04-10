@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**

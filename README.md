@@ -61,6 +61,16 @@ These optional features that can be turned on or off.
 
 # [Email Notification][16]
 
+## Configure your entities
+
+```yaml
+# config.yml
+
+hackzilla_ticket:
+    user_class: AppBundle\Entity\User
+    ticket_class: AppBundle\Entity\TicketWithAttachment
+    message_class: AppBundle\Entity\TicketMessageWithAttachment
+```
 
 ## Custom Templates (Optional)
 

@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,7 +41,7 @@ class AutoClosingCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticket_manager   = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        $ticketManager   = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
         $userManager      = $this->getContainer()->get('fos_user.user_manager');
         $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
 
@@ -51,20 +51,20 @@ class AutoClosingCommand extends ContainerAwareCommand
 
         $username = $input->getArgument('username');
 
-        $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolvedTickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
 
-        foreach ($resolved_tickets as $ticket) {
-            $message = $ticket_manager->createMessage()
+        foreach ($resolvedTickets as $ticket) {
+            $message = $ticketManager->createMessage()
                 ->setMessage(
                     $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED', [], 'HackzillaTicketBundle')], 'HackzillaTicketBundle')
                 )
-                ->setStatus(TicketMessage::STATUS_CLOSED)
+                ->setStatus(TicketMessageInterface::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
                 ->setUser($userManager->findUserByUsername($username))
                 ->setTicket($ticket);
 
-            $ticket->setStatus(TicketMessage::STATUS_CLOSED);
-            $ticket_manager->updateTicket($ticket, $message);
+            $ticket->setStatus(TicketMessageInterface::STATUS_CLOSED);
+            $ticketManager->updateTicket($ticket, $message);
 
             $output->writeln('The ticket "'.$ticket->getSubject().'" has been closed.');
         }

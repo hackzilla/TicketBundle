@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -93,7 +92,7 @@ class TicketManager implements TicketManagerInterface
             $message->setStatus($ticket->getStatus());
             $message->setTicket($ticket);
         } else {
-            $message->setStatus(TicketMessage::STATUS_OPEN);
+            $message->setStatus(TicketMessageInterface::STATUS_OPEN);
         }
 
         return $message;
@@ -185,14 +184,14 @@ class TicketManager implements TicketManagerInterface
             ->orderBy('t.lastMessage', 'DESC');
 
         switch ($ticketStatus) {
-            case TicketMessage::STATUS_CLOSED:
+            case TicketMessageInterface::STATUS_CLOSED:
                 $query
                     ->andWhere('t.status = :status')
                     ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
 
                 break;
 
-            case TicketMessage::STATUS_OPEN:
+            case TicketMessageInterface::STATUS_OPEN:
             default:
                 $query
                     ->andWhere('t.status != :status')

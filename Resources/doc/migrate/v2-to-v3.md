@@ -5,8 +5,8 @@ Any reference to `TicketMessage` constants will need to use `TicketMessageInterf
 Previously:
 
 ```
-Hackzilla\Bundle\TicketBundle\Entity\TicketMessage::STATUS_OPEN
-Hackzilla\Bundle\TicketBundle\Entity\TicketMessage::STATUS_CLOSED
+Hackzilla\Bundle\TicketBundle\Model\TicketMessage::STATUS_OPEN
+Hackzilla\Bundle\TicketBundle\Model\TicketMessage::STATUS_CLOSED
 ```
 
 Will now become:

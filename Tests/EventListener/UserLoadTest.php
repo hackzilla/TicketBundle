@@ -10,7 +10,7 @@ class UserLoadTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $userManager = $this->getUserManagerMock();
 
@@ -25,7 +25,7 @@ class UserLoadTest extends WebTestCase
             ->getMock();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

@@ -1,8 +1,7 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Model\TicketFeature;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 interface MessageAttachmentInterface extends TicketMessageInterface

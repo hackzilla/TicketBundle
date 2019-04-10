@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity;
+namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 

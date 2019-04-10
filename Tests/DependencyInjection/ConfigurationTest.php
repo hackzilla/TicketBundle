@@ -9,12 +9,12 @@ class ConfigurationTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new Configuration();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

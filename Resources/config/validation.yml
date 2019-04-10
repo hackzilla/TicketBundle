@@ -1,0 +1,11 @@
+Hackzilla\Bundle\TicketBundle\Model\Ticket:
+    properties:
+        subject:
+            - NotBlank: ~
+            - Count: { min: 1 }
+            - Valid: ~
+
+Hackzilla\Bundle\TicketBundle\Model\TicketMessage:
+    properties:
+        message:
+            - NotBlank: ~

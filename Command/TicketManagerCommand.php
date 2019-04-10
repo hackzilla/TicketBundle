@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

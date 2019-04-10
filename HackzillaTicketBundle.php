@@ -15,8 +15,6 @@ class HackzillaTicketBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(
-            new DoctrineOrmMappingsPass()
-        );
+        $container->addCompilerPass(new DoctrineOrmMappingsPass());
     }
 }

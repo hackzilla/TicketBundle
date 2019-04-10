@@ -18,8 +18,8 @@ Specify the uploader config, so the bundle knows where to store the files.
 ```yaml
 hackzilla_ticket:
     user_class:             AppBundle\Entity\User
-    ticket_class:           Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment
-    message_class:          Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment
+    ticket_class:           AppBundle\Entity\TicketWithAttachment
+    message_class:          AppBundle\Entity\TicketMessageWithAttachment
     features:
         attachment:         true
 

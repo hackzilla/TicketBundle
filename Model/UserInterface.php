@@ -2,7 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+
+interface UserInterface extends BaseUserInterface
 {
     public function getId();
 

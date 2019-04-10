@@ -2,20 +2,20 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusTransformerTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new StatusTransformer();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

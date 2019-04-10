@@ -19,7 +19,7 @@ class UserManagerTest extends WebTestCase
 
     private $authorizationChecker;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->tokenStorage            = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
@@ -43,7 +43,7 @@ class UserManagerTest extends WebTestCase
         return $userRepository;
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

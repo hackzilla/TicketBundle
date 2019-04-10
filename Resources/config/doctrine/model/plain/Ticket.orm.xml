@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Hackzilla\Bundle\TicketBundle\Entity\Ticket" table="ticket">
-    <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
-    </id>
+  <mapped-superclass name="Hackzilla\Bundle\TicketBundle\Model\Ticket">
     <field name="userCreated" type="integer" column="user_created_id" precision="0" scale="0" nullable="false"/>
     <field name="lastUser" type="integer" column="last_user_id" precision="0" scale="0" nullable="false"/>
     <field name="lastMessage" type="datetime" column="last_message" precision="0" scale="0" nullable="false"/>
@@ -11,6 +8,5 @@
     <field name="status" type="smallint" column="status" precision="0" scale="0" nullable="false"/>
     <field name="priority" type="smallint" column="priority" precision="0" scale="0" nullable="false"/>
     <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
-    <one-to-many field="messages" target-entity="Hackzilla\Bundle\TicketBundle\Entity\TicketMessage" mapped-by="ticket" fetch="LAZY"/>
-  </entity>
+  </mapped-superclass>
 </doctrine-mapping>

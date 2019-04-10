@@ -1,11 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
-
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
 /**
  * Ticket Message Trait.
@@ -23,8 +18,6 @@ trait TicketMessageTrait
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
     protected $message;
 

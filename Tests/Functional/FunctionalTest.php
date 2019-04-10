@@ -2,10 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Vich\UploaderBundle\Event\Events;
 
 /**
@@ -44,6 +44,13 @@ class FunctionalTest extends WebTestCase
     {
         $this->assertTrue(static::$kernel->getContainer()->has('hackzilla_ticket.ticket_manager'));
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get('hackzilla_ticket.ticket_manager'));
+    }
+
+    public function testValidation()
+    {
+        $validator = static::$kernel->getContainer()->get('validator');
+        $violations = $validator->validate(new Ticket());
+        $this->assertNotEmpty($violations);
     }
 
     /**

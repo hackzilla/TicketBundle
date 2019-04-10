@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Component;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 
 class TicketFeatures
 {
