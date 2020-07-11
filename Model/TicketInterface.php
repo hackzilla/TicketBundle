@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -10,6 +12,8 @@
  */
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
+
+use Doctrine\Common\Collections\Collection;
 
 interface TicketInterface
 {
@@ -23,64 +27,50 @@ interface TicketInterface
     /**
      * Set status.
      *
-     * @param int $status
-     *
      * @return $this
      */
-    public function setStatus($status);
+    public function setStatus(int $status);
 
     /**
      * Set ticket status by string.
      *
-     * @param string $status
-     *
      * @return $this
      */
-    public function setStatusString($status);
+    public function setStatusString(string $status);
 
     /**
      * Get ticket status.
-     *
-     * @return int
      */
-    public function getStatus();
+    public function getStatus(): ?int;
 
     /**
      * Get ticket status string.
-     *
-     * @return string
      */
-    public function getStatusString();
+    public function getStatusString(): ?string;
 
     /**
      * Set ticket priority.
      *
-     * @param int $priority
-     *
      * @return $this
      */
-    public function setPriority($priority);
+    public function setPriority(int $priority);
 
     /**
      * Set ticket priority string.
      *
      * @return $this
      */
-    public function setPriorityString($priority);
+    public function setPriorityString(string $priority);
 
     /**
      * Get priority.
-     *
-     * @return int
      */
-    public function getPriority();
+    public function getPriority(): ?int;
 
     /**
      * Get priority string.
-     *
-     * @return string
      */
-    public function getPriorityString();
+    public function getPriorityString(): ?string;
 
     /**
      * Set userCreated.
@@ -100,10 +90,8 @@ interface TicketInterface
 
     /**
      * Get userCreated object.
-     *
-     * @return UserInterface
      */
-    public function getUserCreatedObject();
+    public function getUserCreatedObject(): ?UserInterface;
 
     /**
      * Set lastUser.
@@ -123,58 +111,44 @@ interface TicketInterface
 
     /**
      * Get lastUser object.
-     *
-     * @return UserInterface
      */
-    public function getLastUserObject();
+    public function getLastUserObject(): ?UserInterface;
 
     /**
      * Set lastMessage.
      *
-     * @param \DateTime $lastMessage
-     *
      * @return $this
      */
-    public function setLastMessage($lastMessage);
+    public function setLastMessage(\DateTimeInterface $lastMessage);
 
     /**
      * Get lastMessage.
-     *
-     * @return \DateTime
      */
-    public function getLastMessage();
+    public function getLastMessage(): ?\DateTimeInterface;
 
     /**
      * Set createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
-    public function setCreatedAt($createdAt);
+    public function setCreatedAt(\DateTimeInterface $createdAt);
 
     /**
      * Get createdAt.
-     *
-     * @return \DateTime
      */
-    public function getCreatedAt();
+    public function getCreatedAt(): ?\DateTimeInterface;
 
     /**
      * Set subject.
      *
-     * @param string $subject
-     *
      * @return $this
      */
-    public function setSubject($subject);
+    public function setSubject(string $subject);
 
     /**
      * Get ticket subject.
-     *
-     * @return string
      */
-    public function getSubject();
+    public function getSubject(): ?string;
 
     /**
      * Add message.
@@ -190,8 +164,6 @@ interface TicketInterface
 
     /**
      * Get messages.
-     *
-     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMessages();
+    public function getMessages(): Collection;
 }

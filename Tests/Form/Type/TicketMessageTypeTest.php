@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -23,14 +25,14 @@ final class TicketMessageTypeTest extends TypeTestCase
 {
     private $user;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
     }
 
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'priority' => TicketMessage::PRIORITY_HIGH,

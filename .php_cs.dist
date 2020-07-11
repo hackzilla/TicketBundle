@@ -17,13 +17,21 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
         ->setRules([
             '@PHP56Migration' => true,
             '@PHP56Migration:risky' => true,
+            '@PHP70Migration' => true,
+            '@PHP70Migration:risky' => true,
+            '@PHP71Migration' => true,
+            '@PHP71Migration:risky' => true,
+            '@PHP73Migration' => true,
             '@PHPUnit57Migration:risky' => true,
+            '@PHPUnit60Migration:risky' => true,
+            '@PHPUnit75Migration:risky' => true,
             '@Symfony' => true,
             '@Symfony:risky' => true,
             'array_syntax' => ['syntax' => 'short'],
             'blank_line_after_opening_tag' => true,
             'combine_consecutive_issets' => true,
             'combine_consecutive_unsets' => true,
+            'compact_nullable_typehint' => true,
             'explicit_string_variable' => true,
             'global_namespace_import' => ['import_classes' => false],
             'header_comment' => [
@@ -42,6 +50,7 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
             'no_unset_on_property' => true,
             'no_useless_else' => true,
             'no_useless_return' => true,
+            'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
             'ordered_class_elements' => true,
             'ordered_imports' => true,
             'php_unit_construct' => true,
@@ -51,32 +60,10 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
             'single_line_throw' => false,
             'static_lambda' => true,
             'strict_param' => true,
+            'void_return' => null,
         ])
         ->setFinder(
             PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)
         )
     ;
 }
-
-return Symfony\CS\Config\Config::create()
-    ->setUsingCache(true)
-    ->fixers([
-        'combine_consecutive_unsets',
-        'ereg_to_preg',
-        'header_comment' => $header,
-        'newline_after_open_tag',
-        'ordered_use',
-        'php_unit_construct',
-        'php_unit_dedicate_assert',
-        'php_unit_strict',
-        'phpdoc_order',
-        'short_array_syntax',
-        'short_echo_tag',
-        'strict_param',
-    ])
-    ->finder(
-        Symfony\CS\Finder\DefaultFinder::create()
-            ->exclude(['Tests/Functional/cache'])
-            ->in(__DIR__)
-    )
-;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -37,7 +39,7 @@ class TicketManagerCommand extends Command
      */
     private $userManager;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager = null)
+    public function __construct(TicketManagerInterface $ticketManager, ?UserManagerInterface $userManager = null)
     {
         if (null === $userManager) {
             throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));

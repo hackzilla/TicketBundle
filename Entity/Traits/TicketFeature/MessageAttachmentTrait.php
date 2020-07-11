@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -43,7 +45,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentFile(File $file = null)
+    public function setAttachmentFile(?File $file = null)
     {
         $this->attachmentFile = $file;
 

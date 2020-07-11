@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -192,7 +194,6 @@ final class TestKernel extends Kernel
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
             'user_class' => User::class,
-            'translation_domain' => 'HackzillaTicketBundle',
         ]);
 
         if ($this->useVichUploaderBundle) {

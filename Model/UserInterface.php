@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,11 +13,11 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+
+interface UserInterface extends BaseUserInterface
 {
     public function getId();
 
-    public function getUsername();
-
-    public function getEmail();
+    public function getEmail(): ?string;
 }

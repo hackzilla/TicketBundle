@@ -19,8 +19,8 @@ Available translations for:
 
 ## Requirements
 
-* PHP ^5.6\|^7.0
-* [Symfony][1] ^2.8|^3.4|^4.0
+* PHP ^7.3
+* [Symfony][1] ^4.4
 * [Knp Paginator bundle][2]
 
 ## Optional Requirements
@@ -32,6 +32,7 @@ Available translations for:
 
 | Ticket Bundle | Symfony          | PHP        |
 | --------------| ---------------- | ---------- |
+| [4.x][18]     | ^4.4             | ^7.3       |
 | [3.x][6]      | ^2.8\|^3.4\|^4.0 | ^5.6\|^7.0 |
 | [2.x][7]      | ^2.7\|^3.4       | ^5.3\|^7.0 |
 | [1.x][8]      | ^2.3             | ^5.3\|^7.0 |
@@ -63,7 +64,7 @@ These optional features that can be turned on or off.
 ### Custom Templates (Optional)
 
 ```yaml
-# config.yml
+# config/packages/hackzilla_ticket.yaml
 
 hackzilla_ticket:
     templates:
@@ -100,3 +101,4 @@ I'm open to pull requests for additional languages, features and/or improvements
 [15]: Resources/doc/setup/feature/events.md
 [16]: https://github.com/flodaq/TicketNotificationBundle
 [17]: Resources/doc/migrate/index.md
+[18]: https://github.com/hackzilla/TicketBundle/tree/master

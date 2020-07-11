@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,12 +16,14 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -39,9 +43,7 @@ class TicketController extends Controller
         $userManager = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
-        $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN', [], $translationDomain));
+        $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN', [], 'HackzillaTicketBundle'));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketListQuery(
@@ -62,7 +64,7 @@ class TicketController extends Controller
                 'pagination' => $pagination,
                 'ticketState' => $ticketState,
                 'ticketPriority' => $ticketPriority,
-                'translationDomain' => $translationDomain,
+                'translationDomain' => 'HackzillaTicketBundle',
             ]
         );
     }
@@ -91,14 +93,12 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['new'],
             [
                 'entity' => $ticket,
                 'form' => $form->createView(),
-                'translationDomain' => $translationDomain,
+                'translationDomain' => 'HackzillaTicketBundle',
             ]
         );
     }
@@ -113,14 +113,12 @@ class TicketController extends Controller
 
         $form = $this->createForm(TicketType::class, $entity);
 
-        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['new'],
             [
                 'entity' => $entity,
                 'form' => $form->createView(),
-                'translationDomain' => $translationDomain,
+                'translationDomain' => 'HackzillaTicketBundle',
             ]
         );
     }
@@ -144,9 +142,7 @@ class TicketController extends Controller
         $currentUser = $this->getUserManager()->getCurrentUser();
         $this->getUserManager()->hasPermission($currentUser, $ticket);
 
-        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
-        $data = ['ticket' => $ticket, 'translationDomain' => $translationDomain];
+        $data = ['ticket' => $ticket, 'translationDomain' => 'HackzillaTicketBundle'];
 
         $message = $ticketManager->createMessage($ticket);
 
@@ -173,10 +169,8 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
         $ticket = $ticketManager->getTicketById($ticketId);
 
-        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
         if (!$ticket) {
-            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], $translationDomain));
+            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
         $user = $this->getUserManager()->getCurrentUser();
@@ -195,7 +189,7 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        $data = ['ticket' => $ticket, 'form' => $form->createView(), 'translationDomain' => $translationDomain];
+        $data = ['ticket' => $ticket, 'form' => $form->createView(), 'translationDomain' => 'HackzillaTicketBundle'];
 
         if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user, TicketRole::ADMIN)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
@@ -230,9 +224,7 @@ class TicketController extends Controller
                 $ticket = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
-                    $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
-                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], $translationDomain));
+                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
                 }
 
                 $ticketManager->deleteTicket($ticket);
@@ -243,7 +235,7 @@ class TicketController extends Controller
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
     }
 
-    private function dispatchTicketEvent($ticketEvent, TicketInterface $ticket)
+    private function dispatchTicketEvent($ticketEvent, TicketInterface $ticket): void
     {
         $event = new TicketEvent($ticket);
         $this->get('event_dispatcher')->dispatch($ticketEvent, $event);
@@ -253,20 +245,15 @@ class TicketController extends Controller
      * Creates a form to delete a Ticket entity by id.
      *
      * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm($id): FormInterface
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)
             ->getForm();
     }
 
-    /**
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createMessageForm(TicketMessageInterface $message)
+    private function createMessageForm(TicketMessageInterface $message): FormInterface
     {
         $form = $this->createForm(
             TicketMessageType::class,
@@ -277,10 +264,7 @@ class TicketController extends Controller
         return $form;
     }
 
-    /**
-     * @return \Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface
-     */
-    private function getUserManager()
+    private function getUserManager(): UserManagerInterface
     {
         return $this->get('hackzilla_ticket.user_manager');
     }

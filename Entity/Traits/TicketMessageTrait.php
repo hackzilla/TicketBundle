@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -60,11 +62,9 @@ trait TicketMessageTrait
     /**
      * Set status.
      *
-     * @param int $status
-     *
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status)
     {
         $this->status = $status;
 
@@ -74,11 +74,9 @@ trait TicketMessageTrait
     /**
      * Set status string.
      *
-     * @param string $status
-     *
      * @return $this
      */
-    public function setStatusString($status)
+    public function setStatusString(string $status)
     {
         $status = array_search(strtolower($status), TicketMessageInterface::STATUSES, true);
 
@@ -91,20 +89,16 @@ trait TicketMessageTrait
 
     /**
      * Get status.
-     *
-     * @return int
      */
-    public function getStatus()
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
     /**
      * Get status string.
-     *
-     * @return string
      */
-    public function getStatusString()
+    public function getStatusString(): ?string
     {
         if (!empty(TicketMessageInterface::STATUSES[$this->status])) {
             return TicketMessageInterface::STATUSES[$this->status];
@@ -116,11 +110,9 @@ trait TicketMessageTrait
     /**
      * Set priority.
      *
-     * @param int $priority
-     *
      * @return $this
      */
-    public function setPriority($priority)
+    public function setPriority(int $priority)
     {
         $this->priority = $priority;
 
@@ -130,11 +122,9 @@ trait TicketMessageTrait
     /**
      * Set priority string.
      *
-     * @param string $priority
-     *
      * @return $this
      */
-    public function setPriorityString($priority)
+    public function setPriorityString(string $priority)
     {
         $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES, true);
 
@@ -147,20 +137,16 @@ trait TicketMessageTrait
 
     /**
      * Get priority.
-     *
-     * @return int
      */
-    public function getPriority()
+    public function getPriority(): ?int
     {
         return $this->priority;
     }
 
     /**
      * Get priority string.
-     *
-     * @return string
      */
-    public function getPriorityString()
+    public function getPriorityString(): ?string
     {
         if (!empty(TicketMessageInterface::PRIORITIES[$this->priority])) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
@@ -201,10 +187,8 @@ trait TicketMessageTrait
 
     /**
      * Get user object.
-     *
-     * @return UserInterface
      */
-    public function getUserObject()
+    public function getUserObject(): ?UserInterface
     {
         return $this->userObject;
     }
@@ -212,11 +196,9 @@ trait TicketMessageTrait
     /**
      * Set message.
      *
-     * @param string $message
-     *
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage(string $message)
     {
         $this->message = $message;
 
@@ -225,10 +207,8 @@ trait TicketMessageTrait
 
     /**
      * Get message.
-     *
-     * @return string
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
@@ -258,11 +238,9 @@ trait TicketMessageTrait
     /**
      * Set ticket.
      *
-     * @param TicketInterface $ticket
-     *
      * @return $this
      */
-    public function setTicket(TicketInterface $ticket = null)
+    public function setTicket(?TicketInterface $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -293,10 +271,8 @@ trait TicketMessageTrait
 
     /**
      * Get ticket.
-     *
-     * @return TicketInterface
      */
-    public function getTicket()
+    public function getTicket(): ?TicketInterface
     {
         return $this->ticket;
     }

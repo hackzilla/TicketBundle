@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -62,66 +64,50 @@ interface TicketMessageInterface
     /**
      * Set status.
      *
-     * @param int $status
-     *
      * @return $this
      */
-    public function setStatus($status);
+    public function setStatus(int $status);
 
     /**
      * Set status string.
      *
-     * @param string $status
-     *
      * @return $this
      */
-    public function setStatusString($status);
+    public function setStatusString(string $status);
 
     /**
      * Get status.
-     *
-     * @return int
      */
-    public function getStatus();
+    public function getStatus(): ?int;
 
     /**
      * Get status string.
-     *
-     * @return string
      */
-    public function getStatusString();
+    public function getStatusString(): ?string;
 
     /**
      * Set priority.
      *
-     * @param int $priority
-     *
      * @return $this
      */
-    public function setPriority($priority);
+    public function setPriority(int $priority);
 
     /**
      * Set priority string.
      *
-     * @param string $priority
-     *
      * @return $this
      */
-    public function setPriorityString($priority);
+    public function setPriorityString(string $priority);
 
     /**
      * Get priority.
-     *
-     * @return int
      */
-    public function getPriority();
+    public function getPriority(): ?int;
 
     /**
      * Get priority string.
-     *
-     * @return string
      */
-    public function getPriorityString();
+    public function getPriorityString(): ?string;
 
     /**
      * Set user.
@@ -141,26 +127,20 @@ interface TicketMessageInterface
 
     /**
      * Get user object.
-     *
-     * @return UserInterface
      */
-    public function getUserObject();
+    public function getUserObject(): ?UserInterface;
 
     /**
      * Set message.
      *
-     * @param string $message
-     *
      * @return $this
      */
-    public function setMessage($message);
+    public function setMessage(string $message);
 
     /**
      * Get message.
-     *
-     * @return string
      */
-    public function getMessage();
+    public function getMessage(): ?string;
 
     /**
      * Set createdAt.
@@ -179,16 +159,12 @@ interface TicketMessageInterface
     /**
      * Set ticket.
      *
-     * @param TicketInterface $ticket
-     *
      * @return $this
      */
-    public function setTicket(TicketInterface $ticket = null);
+    public function setTicket(?TicketInterface $ticket = null);
 
     /**
      * Get ticket.
-     *
-     * @return TicketInterface
      */
-    public function getTicket();
+    public function getTicket(): ?TicketInterface;
 }

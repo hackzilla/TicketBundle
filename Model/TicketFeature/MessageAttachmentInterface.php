@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -21,7 +23,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentFile(File $file = null);
+    public function setAttachmentFile(?File $file = null);
 
     /**
      * @return File
@@ -29,11 +31,9 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function getAttachmentFile();
 
     /**
-     * @param string $name
-     *
      * @return $this
      */
-    public function setAttachmentName($name);
+    public function setAttachmentName(string $name);
 
     /**
      * @return string
@@ -45,7 +45,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentSize($size);
+    public function setAttachmentSize(int $size);
 
     /**
      * @return string
@@ -57,7 +57,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentMimeType($mimeType);
+    public function setAttachmentMimeType(string $mimeType);
 
     /**
      * @return string

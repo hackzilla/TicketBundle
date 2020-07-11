@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -19,22 +21,22 @@ final class TicketTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Ticket();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(Ticket::class, $this->object);
     }
 
-    public function testStatus()
+    public function testStatus(): void
     {
         $this->object->setStatus(TicketMessageInterface::STATUS_INVALID);
         $this->assertSame(TicketMessageInterface::STATUS_INVALID, $this->object->getStatus());

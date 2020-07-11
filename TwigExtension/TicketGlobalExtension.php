@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -21,10 +23,7 @@ class TicketGlobalExtension extends AbstractExtension implements GlobalsInterfac
 {
     protected $templates = [];
 
-    /**
-     * @param array $templates
-     */
-    public function __construct($templates)
+    public function __construct(array $templates)
     {
         $this->templates = $templates;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -59,7 +61,7 @@ class AutoClosingCommand extends Command
     /**
      * BC: Replace 5th argument with "Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" after bumping to "symfony/dependency-injection:^4.1".
      */
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ContainerInterface $container)
+    public function __construct(TicketManagerInterface $ticketManager, ?UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ContainerInterface $container)
     {
         if (null === $userManager) {
             throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));

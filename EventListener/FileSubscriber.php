@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -34,7 +36,7 @@ class FileSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function postUpload(VichEvent\Event $event)
+    public function postUpload(VichEvent\Event $event): void
     {
         /** @var MessageAttachmentInterface $object */
         $object = $event->getObject();

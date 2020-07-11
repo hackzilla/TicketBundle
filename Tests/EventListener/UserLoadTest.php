@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -19,14 +21,14 @@ final class UserLoadTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $userManager = $this->getUserManagerMock();
 
         $this->object = new UserLoad($userManager);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
@@ -36,7 +38,7 @@ final class UserLoadTest extends WebTestCase
         return $this->createMock(UserManager::class);
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserLoad::class, $this->object);
     }

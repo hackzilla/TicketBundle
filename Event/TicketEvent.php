@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -26,7 +28,7 @@ class TicketEvent extends Event
         $this->ticket = $ticket;
     }
 
-    public function getTicket()
+    public function getTicket(): TicketInterface
     {
         return $this->ticket;
     }

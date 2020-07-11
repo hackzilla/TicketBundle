@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -48,30 +50,10 @@ class HackzillaTicketExtension extends Extension
         if (!isset($bundles['VichUploaderBundle'])) {
             $container->removeDefinition('hackzilla_ticket.file_upload_subscriber');
         }
-
-        $this->setTranslationDomain($config, $container);
     }
 
     public static function bundleDirectory()
     {
         return realpath(__DIR__.'/..');
-    }
-
-    private function setTranslationDomain(array $config, ContainerBuilder $container)
-    {
-        $translationDomain = $config['translation_domain'];
-
-        if ('HackzillaTicketBundle' !== $translationDomain) {
-            @trigger_error(
-                'Omitting the option "hackzilla_ticket.translation_domain" or using other value than "HackzillaTicketBundle" is deprecated since hackzilla/ticket-bundle 3.3.'
-                .' This option will be removed in version 4.0 and the only supported translation domain will be "HackzillaTicketBundle".',
-                E_USER_DEPRECATED
-            );
-        }
-
-        $container->setParameter('hackzilla_ticket.translation_domain', $translationDomain);
-
-        $definition = $container->getDefinition('hackzilla_ticket.ticket_manager');
-        $definition->addMethodCall('setTranslationDomain', [$translationDomain]);
     }
 }

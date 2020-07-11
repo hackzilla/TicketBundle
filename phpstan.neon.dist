@@ -4,5 +4,6 @@ parameters:
         - .
     excludes_analyse:
         - vendor/
+        - Tests/
     ignoreErrors:
         - '#.* (class|type) Vich\\UploaderBundle\\.*#'

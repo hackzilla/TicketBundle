@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -17,9 +19,6 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
- */
 interface TicketManagerInterface
 {
     public function setEntityManager(ObjectManager $om);
@@ -28,14 +27,11 @@ interface TicketManagerInterface
 
     public function createTicket();
 
-    public function createMessage(TicketInterface $ticket = null);
+    public function createMessage(?TicketInterface $ticket = null);
 
-    /**
-     * NEXT_MAJOR: Declare `void` as return type.
-     */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
+    public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void;
 
-    public function deleteTicket(TicketInterface $ticket);
+    public function deleteTicket(TicketInterface $ticket): void;
 
     public function getTicketById($ticketId);
 
@@ -45,40 +41,24 @@ interface TicketManagerInterface
 
     public function findTicketsBy(array $criteria);
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
-     *
-     * @param int $ticketStatus
-     * @param int $ticketPriority
-     *
-     * @return QueryBuilder
-     */
-    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
+    public function getTicketListQuery(UserManagerInterface $userManager, int $ticketStatus, ?int $ticketPriority = null): QueryBuilder;
 
     /**
-     * @param int $days
-     *
      * @return mixed
      */
-    public function getResolvedTicketOlderThan($days);
+    public function getResolvedTicketOlderThan(int $days);
 
     /**
      * Lookup status code.
      *
-     * @param string $statusStr
-     *
      * @return int
      */
-    public function getTicketStatus($statusStr);
+    public function getTicketStatus(string $statusStr);
 
     /**
      * Lookup priority code.
      *
-     * @param string $priorityStr
-     *
      * @return int
      */
-    public function getTicketPriority($priorityStr);
+    public function getTicketPriority(string $priorityStr);
 }

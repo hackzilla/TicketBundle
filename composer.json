@@ -7,13 +7,7 @@
         "ticketing",
         "help desk",
         "helpdesk",
-        "support",
-        "multilingual",
-        "english",
-        "french",
-        "russian",
-        "german",
-        "spanish"
+        "support"
     ],
     "license": "MIT",
     "authors": [
@@ -25,34 +19,33 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
-        "doctrine/doctrine-bundle": "^1.4 || ^2.0",
+        "php": "^7.3",
+        "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.4.8",
-        "knplabs/knp-paginator-bundle": "^2.6 || ^3.4 || ^4.0 || ^5.0",
-        "symfony/config": "^2.8 || ^3.4 || ^4.0",
-        "symfony/console": "^2.8 || ^3.4 || ^4.0",
-        "symfony/dependency-injection": "^2.8 || ^3.4 || ^4.0",
-        "symfony/event-dispatcher": "^2.8 || ^3.4 || ^4.0",
-        "symfony/form": "^2.8 || ^3.4 || ^4.0",
-        "symfony/framework-bundle": "^2.8.1 || ^3.4 || ^4.0",
-        "symfony/http-foundation": "^2.8 || ^3.4 || ^4.0",
-        "symfony/http-kernel": "^2.8 || ^3.4 || ^4.0",
-        "symfony/options-resolver": "^2.8 || ^3.4 || ^4.0",
-        "symfony/security-bundle": "^2.8 || ^3.4 || ^4.0",
-        "symfony/translation": "^2.8 || ^3.4 || ^4.0",
-        "symfony/twig-bundle": "^2.8 || ^3.4 || ^4.0",
-        "symfony/validator": "^2.8 || ^3.4 || ^4.0",
-        "symfony/yaml": "^2.8 || ^3.4 || ^4.0",
-        "twig/twig": "^1.34 || ^2.0"
+        "knplabs/knp-paginator-bundle": "^5.0",
+        "symfony/config": "^4.4",
+        "symfony/console": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/event-dispatcher": "^4.4",
+        "symfony/form": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/http-foundation": "^4.4",
+        "symfony/http-kernel": "^4.4",
+        "symfony/options-resolver": "^4.4",
+        "symfony/security-bundle": "^4.4",
+        "symfony/translation": "^4.4",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/validator": "^4.4",
+        "symfony/yaml": "^4.4",
+        "twig/twig": "^2.9"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
-        "friendsofphp/php-cs-fixer": "^1.4 || ^2.0",
-        "friendsofsymfony/user-bundle": "^1.3 || ^2.1",
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "friendsofsymfony/user-bundle": "^2.1",
         "phpstan/phpstan": "^0.12.32",
-        "phpunit/phpunit": ">=5.4.3,<8.0",
-        "symfony/phpunit-bridge": "^3.2 || ^4.0",
-        "symfony/security": "^2.8 || ^3.4 || ^4.0"
+        "symfony/phpunit-bridge": "^5.1",
+        "symfony/security": "^4.4"
     },
     "suggest": {
         "friendsofsymfony/user-bundle": "In order to ease user management",
@@ -63,7 +56,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.x-dev"
+            "dev-master": "4.x-dev"
         }
     },
     "autoload": {

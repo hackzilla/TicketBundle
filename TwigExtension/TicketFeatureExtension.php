@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -34,12 +36,7 @@ class TicketFeatureExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $feature
-     *
-     * @return bool|null
-     */
-    public function hasFeature($feature)
+    public function hasFeature(string $feature): ?bool
     {
         return $this->ticketFeatures->hasFeature($feature);
     }
