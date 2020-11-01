@@ -11,19 +11,70 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class AutoClosingCommand extends ContainerAwareCommand
+class AutoClosingCommand extends Command
 {
     protected static $defaultName = 'ticket:autoclosing';
+
+    /**
+     * @var TicketManagerInterface
+     */
+    private $ticketManager;
+
+    /**
+     * @var UserManagerInterface
+     */
+    private $userManager;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var string
+     */
+    private $locale = 'en';
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * BC: Replace 5th argument with "Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" after bumping to "symfony/dependency-injection:^4.1".
+     */
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ContainerInterface $container)
+    {
+        if (null === $userManager) {
+            throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));
+        }
+
+        parent::__construct();
+
+        $this->ticketManager = $ticketManager;
+        $this->userManager = $userManager;
+        $this->entityManager = $entityManager;
+        $this->translator = $translator;
+        if ($container->hasParameter('locale')) {
+            $this->locale = $container->getParameter('locale');
+        }
+    }
 
     /**
      * {@inheritdoc}
@@ -52,36 +103,27 @@ class AutoClosingCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->getContainer()->has('fos_user.user_manager')) {
-            throw new \RuntimeException(sprintf('Command "%s" requires the service "fos_user.user_manager". Is "friendsofsymfony/user-bundle" installed and enabled?', $this->getName()));
-        }
+        $ticketRepository = $this->entityManager->getRepository(Ticket::class);
 
-        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
-
-        $locale = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
-        $translator = $this->getContainer()->get('translator');
-        $translator->setLocale($locale);
-
-        $translationDomain = $this->getContainer()->getParameter('hackzilla_ticket.translation_domain');
+        $this->translator->setLocale($this->locale);
 
         $username = $input->getArgument('username');
 
-        $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolvedTickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
 
-        foreach ($resolved_tickets as $ticket) {
-            $message = $ticketManager->createMessage()
+        foreach ($resolvedTickets as $ticket) {
+            $message = $this->ticketManager->createMessage()
                 ->setMessage(
-                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED', [], $translationDomain)], $translationDomain)
+                    $this->translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $this->translator->trans('STATUS_CLOSED', [], 'HackzillaTicketBundle')], 'HackzillaTicketBundle')
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
-                ->setUser($userManager->findUserByUsername($username))
+                ->setUser($this->userManager->findUserByUsername($username))
                 ->setTicket($ticket);
 
             $ticket->setStatus(TicketMessage::STATUS_CLOSED);
-            $ticketManager->updateTicket($ticket, $message);
+
+            $this->ticketManager->updateTicket($ticket, $message);
 
             $output->writeln('The ticket "'.$ticket->getSubject().'" has been closed.');
         }

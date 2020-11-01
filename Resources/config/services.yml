@@ -14,6 +14,9 @@ services:
             - '@security.authorization_checker'
         public: true
 
+    Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface:
+        alias: hackzilla_ticket.user_manager
+
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
@@ -29,6 +32,9 @@ services:
             - [ setEntityManager, ['@doctrine.orm.entity_manager'] ]
             - [ setTranslator, ['@translator'] ]
         public: true
+
+    Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface:
+        alias: hackzilla_ticket.ticket_manager
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
@@ -73,10 +79,20 @@ services:
 
     hackzilla_ticket.command.autoclosing:
         class: Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand
+        arguments:
+            - '@hackzilla_ticket.ticket_manager'
+            - '@hackzilla_ticket.user_manager'
+            - '@doctrine.orm.entity_manager'
+            - '@translator'
+            # BC: Replace 5th argument with "@parameter_bag" after bumping "symfony/dependency-injection" to "^4.1"
+            - '@service_container'
         tags:
             - { name: console.command, command: 'ticket:autoclosing' }
 
     hackzilla_ticket.command.create:
         class: Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand
+        arguments:
+            - '@hackzilla_ticket.ticket_manager'
+            - '@?fos_user.user_manager'
         tags:
             - { name: console.command, command: 'ticket:create' }
